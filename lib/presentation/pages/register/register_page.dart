@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:my_chat/core/qb_auth.dart';
+import 'package:my_chat/presentation/pages/dashboard/dashboard_page.dart';
+import 'package:quickblox_sdk/quickblox_sdk.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -20,26 +23,37 @@ class _RegisterPageState extends State<RegisterPage> {
         title: Text("Register"),
       ),
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFormField(
               controller: emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Email",
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: passwordController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Password",
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final result = await QBAuth().createUser("login", "password");
+                result.fold(
+                  (l) => ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(l),
+                    ),
+                  ),
+                  (r) => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => DashboardPage())),
+                );
+              },
               child: Text("Register"),
             )
           ],
