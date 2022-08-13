@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:my_chat/core/qb_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,15 +12,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("LOGIN"),
+        title: const Text("LOGIN"),
       ),
       body: Container(
         child: ElevatedButton(
-          child: Text("Login"),
-          onPressed: () async {
-            final result = await QBAuth().loginUser('logi1n', 'password');
-            print(result);
-          },
+          child: const Text("Login"),
+          onPressed: () async {},
         ),
       ),
     );
